@@ -1,98 +1,79 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-
-export default function HomeScreen() {
+import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+ 
+export default function App() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView className="flex-1">
+      <ScrollView className="flex-1">
+        {/* メインのgradientカード */}
+        <LinearGradient
+          colors={['#60a5fa', '#a855f7']} // from-blue-400 to-purple-600
+          className="flex-1 items-center justify-center min-h-screen"
+        >
+          <View className="bg-white rounded-xl p-6 shadow-2xl mx-4 mb-8">
+            <Text className="text-2xl font-bold text-gray-800 mb-2 text-center">
+              Welcome to NativeWind! 🎨
+            </Text>
+            <Text className="text-base text-gray-600 text-center">
+              Gradientが美しく動いていますね！
+            </Text>
+          </View>
+          
+          {/* 色々なgradientサンプル */}
+          <View className="w-full px-4 space-y-4">
+            {/* 夕焼けgradient */}
+            <LinearGradient
+              colors={['#fb923c', '#ef4444', '#ec4899']} // orange-400, red-500, pink-500
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              className="p-4 rounded-lg"
+            >
+              <Text className="text-white font-semibold text-center">🌅 夕焼けグラデーション</Text>
+            </LinearGradient>
+            
+            {/* 海のgradient */}
+            <LinearGradient
+              colors={['#22d3ee', '#3b82f6']} // cyan-400 to blue-500
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              className="p-4 rounded-lg"
+            >
+              <Text className="text-white font-semibold text-center">🌊 海のグラデーション</Text>
+            </LinearGradient>
+            
+            {/* 森のgradient */}
+            <LinearGradient
+              colors={['#4ade80', '#059669']} // green-400 to emerald-600
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              className="p-4 rounded-lg"
+            >
+              <Text className="text-white font-semibold text-center">🌲 森のグラデーション</Text>
+            </LinearGradient>
+            
+            {/* 宇宙のgradient */}
+            <LinearGradient
+              colors={['#581c87', '#1e3a8a', '#312e81']} // purple-900, blue-900, indigo-900
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              className="p-4 rounded-lg"
+            >
+              <Text className="text-white font-semibold text-center">🌌 宇宙のグラデーション</Text>
+            </LinearGradient>
+            
+            {/* 金色のgradient */}
+            <LinearGradient
+              colors={['#facc15', '#eab308', '#ca8a04']} // yellow-400, yellow-500, yellow-600
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              className="p-4 rounded-lg"
+            >
+              <Text className="text-gray-800 font-semibold text-center">✨ ゴールドグラデーション</Text>
+            </LinearGradient>
+          </View>
+        </LinearGradient>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
