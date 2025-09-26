@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import {
   FlatList,
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Message {
   id: string;
@@ -18,6 +20,13 @@ interface Message {
 }
 
 export default function ChatScreen() {
+  // パラメータからフレンド情報を取得
+  const { friendId, friendName, friendAvatar } = useLocalSearchParams<{
+    friendId: string;
+    friendName: string;
+    friendAvatar: string;
+  }>();
+  // フレンド固有のメッセージデータ（実際のアプリでは、friendIdを使ってサーバーから取得）
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -33,7 +42,7 @@ export default function ChatScreen() {
     },
     {
       id: '3',
-      text: '今日はいい天気ですね',
+      text: `${friendName || 'フレンド'}さんとチャット中です`,
       isOwn: false,
       timestamp: new Date(),
     },
@@ -86,31 +95,80 @@ export default function ChatScreen() {
   );
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1 bg-gray-100"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <FlatList
-        data={messages}
-        renderItem={renderMessage}
-        keyExtractor={(item) => item.id}
-        className="flex-1"
-        contentContainerClassName="p-4"
-      />
-      
-      <View className="flex-row items-end px-4 py-3 bg-white border-t border-gray-200">
-        <TextInput
-          className="flex-1 border border-gray-200 rounded-2xl px-4 py-2.5 text-base bg-gray-50 max-h-24"
-          value={inputText}
-          onChangeText={setInputText}
-          placeholder="メッセージを入力..."
-          placeholderTextColor="#999"
-          multiline
-        />
-        <TouchableOpacity className="ml-3 p-2" onPress={sendMessage}>
-          <Ionicons name="send" size={24} color="#3B82F6" />
-        </TouchableOpacity>
+    <SafeAreaView className="flex-1 bg-gray-100">
+      {/* チャットヘッダー */}
+      <View className="bg-white border-b border-gray-200 px-4 py-3">
+        <View className="flex-row items-center">
+          {/* 戻るボタン */}
+          <TouchableOpacity 
+            onPress={() => router.back()}
+            className="mr-3 p-2 -ml-2"
+          >
+            <Ionicons name="chevron-back" size={24} color="#3B82F6" />
+          </TouchableOpacity>
+
+          {/* フレンドアバター */}
+          <View className="w-10 h-10 rounded-full bg-blue-100 items-center justify-center mr-3">
+            <Text className="text-xl">{friendAvatar || '👤'}</Text>
+          </View>
+
+          {/* フレンド名 */}
+          <View className="flex-1">
+            <Text className="text-lg font-semibold text-gray-900">
+              {friendName || 'フレンド'}
+            </Text>
+            <Text className="text-sm text-green-500">オンライン</Text>
+          </View>
+
+          {/* メニューボタン */}
+          <TouchableOpacity className="p-2 -mr-2">
+            <Ionicons name="ellipsis-horizontal" size={24} color="#9CA3AF" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </KeyboardAvoidingView>
+
+      {/* メッセージリスト */}
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <FlatList
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={(item) => item.id}
+          className="flex-1"
+          contentContainerClassName="p-4"
+          showsVerticalScrollIndicator={false}
+        />
+        
+        {/* メッセージ入力エリア */}
+        <View className="flex-row items-end px-4 py-3 bg-white border-t border-gray-200">
+          <TouchableOpacity className="mr-3 p-2">
+            <Ionicons name="add" size={24} color="#9CA3AF" />
+          </TouchableOpacity>
+          
+          <TextInput
+            className="flex-1 border border-gray-200 rounded-2xl px-4 py-2.5 text-base bg-gray-50 max-h-24"
+            value={inputText}
+            onChangeText={setInputText}
+            placeholder="メッセージを入力..."
+            placeholderTextColor="#999"
+            multiline
+          />
+          
+          <TouchableOpacity 
+            className="ml-3 p-2" 
+            onPress={sendMessage}
+            disabled={!inputText.trim()}
+          >
+            <Ionicons 
+              name="send" 
+              size={24} 
+              color={inputText.trim() ? "#3B82F6" : "#D1D5DB"} 
+            />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
