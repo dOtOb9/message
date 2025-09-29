@@ -15,9 +15,6 @@ export const MessageInput: React.FC<MessageInputProps> = ({
 }) => {
   return (
     <View className="flex-row items-end px-4 py-3 bg-white border-t border-gray-200">
-      <TouchableOpacity className="mr-3 p-2">
-        <Ionicons name="add" size={24} color="#9CA3AF" />
-      </TouchableOpacity>
       
       <TextInput
         className="flex-1 border border-gray-200 rounded-2xl px-4 py-2.5 text-base bg-gray-50 max-h-24"

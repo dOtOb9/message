@@ -21,7 +21,7 @@ export default function ChatScreen() {
   }>();
   
   // カスタムhookでChat機能を管理
-  const { messages, loading, userNames, chatId, analyzeChatAndGenerateTodos } = useChat(user, friendId, friendName);
+  const { messages, loading, userNames, chatId } = useChat(user, friendId, friendName);
 
     // メッセージ送信
   const handleSendMessage = async () => {

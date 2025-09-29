@@ -1,5 +1,4 @@
 import { TodoHeader } from '@/components/TodoHeader';
-import { TodoInput } from '@/components/TodoInput';
 import { TodoList } from '@/components/TodoList';
 import { ErrorState, LoadingState, UnauthenticatedState } from '@/components/TodoStates';
 import { useAuth } from '@/contexts/AuthContext';
@@ -47,11 +46,6 @@ export default function Todo() {
   return (
     <View className="flex-1 bg-gray-50">
       <TodoHeader todos={todos} />
-      <TodoInput 
-        inputText={inputText}
-        onChangeText={setInputText}
-        onSubmit={handleAddTodo}
-      />
       <TodoList 
         todos={todos}
         user={user}
